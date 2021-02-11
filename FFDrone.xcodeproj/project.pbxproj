@@ -1,0 +1,505 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		463C67577E41611E9E74D909 /* Pods_FFDrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */; };
+		59F1A73025D346A80088EA8C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A72D25D346A80088EA8C /* HomeViewController.swift */; };
+		59F1A73125D346A80088EA8C /* HudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A72E25D346A80088EA8C /* HudViewController.swift */; };
+		59F1A73825D347260088EA8C /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A73625D347260088EA8C /* OverlayView.swift */; };
+		59F1A73925D347260088EA8C /* JoystickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A73725D347260088EA8C /* JoystickView.swift */; };
+		59F1A73D25D3473E0088EA8C /* ModelDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A73C25D3473E0088EA8C /* ModelDataHandler.swift */; };
+		59F1A74325D347780088EA8C /* CVPixelBufferExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A74025D347780088EA8C /* CVPixelBufferExtension.swift */; };
+		59F1A74425D347780088EA8C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A74125D347780088EA8C /* StringExtension.swift */; };
+		59F1A74525D347780088EA8C /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A74225D347780088EA8C /* UIImageExtension.swift */; };
+		59F1A74C25D34B5D0088EA8C /* coco.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A74825D34B5D0088EA8C /* coco.tflite */; };
+		59F1A74D25D34B5D0088EA8C /* ducky.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A74925D34B5D0088EA8C /* ducky.tflite */; };
+		59F1A74E25D34B5D0088EA8C /* ducky_labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A74A25D34B5D0088EA8C /* ducky_labelmap.txt */; };
+		59F1A74F25D34B5D0088EA8C /* coco_labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A74B25D34B5D0088EA8C /* coco_labelmap.txt */; };
+		59F1A75325D34C720088EA8C /* Hud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A75225D34C720088EA8C /* Hud.storyboard */; };
+		59F1A75625D34CA50088EA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59F1A75525D34CA40088EA8C /* Assets.xcassets */; };
+		9B9ACF902338B32E0042D1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9ACF8F2338B32E0042D1BD /* AppDelegate.swift */; };
+		9B9ACF922338B32E0042D1BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9ACF912338B32E0042D1BD /* ViewController.swift */; };
+		9B9ACF952338B32E0042D1BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9ACF932338B32E0042D1BD /* Main.storyboard */; };
+		9B9ACF9A2338B32E0042D1BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9ACF982338B32E0042D1BD /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FFDrone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E769901F82BCE768F829A10 /* Pods-FFDrone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.debug.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.debug.xcconfig"; sourceTree = "<group>"; };
+		383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.release.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.release.xcconfig"; sourceTree = "<group>"; };
+		59F1A72D25D346A80088EA8C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		59F1A72E25D346A80088EA8C /* HudViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudViewController.swift; sourceTree = "<group>"; };
+		59F1A73625D347260088EA8C /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		59F1A73725D347260088EA8C /* JoystickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoystickView.swift; sourceTree = "<group>"; };
+		59F1A73C25D3473E0088EA8C /* ModelDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDataHandler.swift; sourceTree = "<group>"; };
+		59F1A74025D347780088EA8C /* CVPixelBufferExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVPixelBufferExtension.swift; sourceTree = "<group>"; };
+		59F1A74125D347780088EA8C /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		59F1A74225D347780088EA8C /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		59F1A74825D34B5D0088EA8C /* coco.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = coco.tflite; sourceTree = "<group>"; };
+		59F1A74925D34B5D0088EA8C /* ducky.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ducky.tflite; sourceTree = "<group>"; };
+		59F1A74A25D34B5D0088EA8C /* ducky_labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ducky_labelmap.txt; sourceTree = "<group>"; };
+		59F1A74B25D34B5D0088EA8C /* coco_labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coco_labelmap.txt; sourceTree = "<group>"; };
+		59F1A75225D34C720088EA8C /* Hud.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hud.storyboard; sourceTree = "<group>"; };
+		59F1A75525D34CA40088EA8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9B9ACF8C2338B32E0042D1BD /* FFDrone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDrone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B9ACF8F2338B32E0042D1BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9B9ACF912338B32E0042D1BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9B9ACF942338B32E0042D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9B9ACF992338B32E0042D1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9B9ACF9B2338B32E0042D1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9B9ACF892338B32E0042D1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				463C67577E41611E9E74D909 /* Pods_FFDrone.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2871CD38826B591F7F9A7A22 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0E769901F82BCE768F829A10 /* Pods-FFDrone.debug.xcconfig */,
+				383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		59F1A72B25D346A80088EA8C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9B9ACF912338B32E0042D1BD /* ViewController.swift */,
+				59F1A72D25D346A80088EA8C /* HomeViewController.swift */,
+				59F1A72E25D346A80088EA8C /* HudViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		59F1A73525D347260088EA8C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				59F1A73625D347260088EA8C /* OverlayView.swift */,
+				59F1A73725D347260088EA8C /* JoystickView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		59F1A73B25D3473E0088EA8C /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				59F1A73C25D3473E0088EA8C /* ModelDataHandler.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		59F1A73F25D347780088EA8C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				59F1A74025D347780088EA8C /* CVPixelBufferExtension.swift */,
+				59F1A74125D347780088EA8C /* StringExtension.swift */,
+				59F1A74225D347780088EA8C /* UIImageExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		59F1A74725D34B5D0088EA8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				59F1A74825D34B5D0088EA8C /* coco.tflite */,
+				59F1A74925D34B5D0088EA8C /* ducky.tflite */,
+				59F1A74A25D34B5D0088EA8C /* ducky_labelmap.txt */,
+				59F1A74B25D34B5D0088EA8C /* coco_labelmap.txt */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		85D4F50DB046BB85C7F88149 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B9ACF832338B32E0042D1BD = {
+			isa = PBXGroup;
+			children = (
+				9B9ACF8E2338B32E0042D1BD /* FFDrone */,
+				9B9ACF8D2338B32E0042D1BD /* Products */,
+				2871CD38826B591F7F9A7A22 /* Pods */,
+				85D4F50DB046BB85C7F88149 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9B9ACF8D2338B32E0042D1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9B9ACF8C2338B32E0042D1BD /* FFDrone.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9B9ACF8E2338B32E0042D1BD /* FFDrone */ = {
+			isa = PBXGroup;
+			children = (
+				59F1A72B25D346A80088EA8C /* ViewControllers */,
+				59F1A74725D34B5D0088EA8C /* Model */,
+				59F1A73F25D347780088EA8C /* Extensions */,
+				59F1A73B25D3473E0088EA8C /* Util */,
+				59F1A73525D347260088EA8C /* Views */,
+				9B9ACF8F2338B32E0042D1BD /* AppDelegate.swift */,
+				9B9ACF932338B32E0042D1BD /* Main.storyboard */,
+				59F1A75225D34C720088EA8C /* Hud.storyboard */,
+				59F1A75525D34CA40088EA8C /* Assets.xcassets */,
+				9B9ACF982338B32E0042D1BD /* LaunchScreen.storyboard */,
+				9B9ACF9B2338B32E0042D1BD /* Info.plist */,
+			);
+			path = FFDrone;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9B9ACF8B2338B32E0042D1BD /* FFDrone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B9ACF9E2338B32E0042D1BD /* Build configuration list for PBXNativeTarget "FFDrone" */;
+			buildPhases = (
+				C4AD7681F29D71A5F01E1325 /* [CP] Check Pods Manifest.lock */,
+				9B9ACF882338B32E0042D1BD /* Sources */,
+				9B9ACF892338B32E0042D1BD /* Frameworks */,
+				9B9ACF8A2338B32E0042D1BD /* Resources */,
+				1011C947B06B657AF8658AB3 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FFDrone;
+			productName = HelloDrone;
+			productReference = 9B9ACF8C2338B32E0042D1BD /* FFDrone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9B9ACF842338B32E0042D1BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = Parrot;
+				TargetAttributes = {
+					9B9ACF8B2338B32E0042D1BD = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = 9B9ACF872338B32E0042D1BD /* Build configuration list for PBXProject "FFDrone" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9B9ACF832338B32E0042D1BD;
+			productRefGroup = 9B9ACF8D2338B32E0042D1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9B9ACF8B2338B32E0042D1BD /* FFDrone */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9B9ACF8A2338B32E0042D1BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B9ACF9A2338B32E0042D1BD /* LaunchScreen.storyboard in Resources */,
+				59F1A74D25D34B5D0088EA8C /* ducky.tflite in Resources */,
+				59F1A74C25D34B5D0088EA8C /* coco.tflite in Resources */,
+				9B9ACF952338B32E0042D1BD /* Main.storyboard in Resources */,
+				59F1A74F25D34B5D0088EA8C /* coco_labelmap.txt in Resources */,
+				59F1A75325D34C720088EA8C /* Hud.storyboard in Resources */,
+				59F1A75625D34CA50088EA8C /* Assets.xcassets in Resources */,
+				59F1A74E25D34B5D0088EA8C /* ducky_labelmap.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1011C947B06B657AF8658AB3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FFDrone/Pods-FFDrone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FFDrone/Pods-FFDrone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FFDrone/Pods-FFDrone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C4AD7681F29D71A5F01E1325 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FFDrone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9B9ACF882338B32E0042D1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B9ACF922338B32E0042D1BD /* ViewController.swift in Sources */,
+				59F1A74325D347780088EA8C /* CVPixelBufferExtension.swift in Sources */,
+				9B9ACF902338B32E0042D1BD /* AppDelegate.swift in Sources */,
+				59F1A74525D347780088EA8C /* UIImageExtension.swift in Sources */,
+				59F1A73925D347260088EA8C /* JoystickView.swift in Sources */,
+				59F1A73D25D3473E0088EA8C /* ModelDataHandler.swift in Sources */,
+				59F1A74425D347780088EA8C /* StringExtension.swift in Sources */,
+				59F1A73025D346A80088EA8C /* HomeViewController.swift in Sources */,
+				59F1A73125D346A80088EA8C /* HudViewController.swift in Sources */,
+				59F1A73825D347260088EA8C /* OverlayView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9B9ACF932338B32E0042D1BD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B9ACF942338B32E0042D1BD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9B9ACF982338B32E0042D1BD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B9ACF992338B32E0042D1BD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9B9ACF9C2338B32E0042D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9B9ACF9D2338B32E0042D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9B9ACF9F2338B32E0042D1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E769901F82BCE768F829A10 /* Pods-FFDrone.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B738LA6BGC;
+				INFOPLIST_FILE = FFDrone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = parrot.FFDrone.nf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9B9ACFA02338B32E0042D1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B738LA6BGC;
+				INFOPLIST_FILE = FFDrone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = parrot.FFDrone.nf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9B9ACF872338B32E0042D1BD /* Build configuration list for PBXProject "FFDrone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B9ACF9C2338B32E0042D1BD /* Debug */,
+				9B9ACF9D2338B32E0042D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B9ACF9E2338B32E0042D1BD /* Build configuration list for PBXNativeTarget "FFDrone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B9ACF9F2338B32E0042D1BD /* Debug */,
+				9B9ACFA02338B32E0042D1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9B9ACF842338B32E0042D1BD /* Project object */;
+}
