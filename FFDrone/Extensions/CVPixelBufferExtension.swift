@@ -11,12 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// =============================================================================
 
 import Foundation
 import Accelerate
 
 
 extension CVPixelBuffer {
+  /// Returns thumbnail by cropping pixel buffer to biggest square and scaling the cropped image
+  /// to model dimensions.
   func resized(to size: CGSize ) -> CVPixelBuffer? {
 
     let imageWidth = CVPixelBufferGetWidth(self)
@@ -24,7 +27,8 @@ extension CVPixelBuffer {
 
     let pixelBufferType = CVPixelBufferGetPixelFormatType(self)
 
-    assert(pixelBufferType == kCVPixelFormatType_32BGRA)
+    assert(pixelBufferType == kCVPixelFormatType_32BGRA ||
+           pixelBufferType == kCVPixelFormatType_32ARGB)
 
     let inputImageRowBytes = CVPixelBufferGetBytesPerRow(self)
     let imageChannels = 4

@@ -184,6 +184,7 @@ class HomeViewController: UITableViewController {
             let selectedUid = selectedUid {
             viewController.setDeviceUid(selectedUid)
         }
+        
     }
 }
 

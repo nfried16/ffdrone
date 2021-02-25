@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		463C67577E41611E9E74D909 /* Pods_FFDrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */; };
+		596A3B5325E5958F00D71C82 /* fire_labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = 596A3B5225E5958E00D71C82 /* fire_labelmap.txt */; };
+		598B3F5F25E775AD0053782A /* ModelDataHandler2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B3F5E25E775AD0053782A /* ModelDataHandler2.swift */; };
+		598B3F6225E775CA0053782A /* fire.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 598B3F6125E775CA0053782A /* fire.tflite */; };
+		598B3F6525E776520053782A /* NMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B3F6425E776520053782A /* NMS.swift */; };
+		598B3F6825E776C10053782A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B3F6725E776C10053782A /* UIColorExtension.swift */; };
 		59F1A73025D346A80088EA8C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A72D25D346A80088EA8C /* HomeViewController.swift */; };
 		59F1A73125D346A80088EA8C /* HudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A72E25D346A80088EA8C /* HudViewController.swift */; };
 		59F1A73825D347260088EA8C /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F1A73625D347260088EA8C /* OverlayView.swift */; };
@@ -32,6 +37,11 @@
 		03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FFDrone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E769901F82BCE768F829A10 /* Pods-FFDrone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.debug.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.debug.xcconfig"; sourceTree = "<group>"; };
 		383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.release.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.release.xcconfig"; sourceTree = "<group>"; };
+		596A3B5225E5958E00D71C82 /* fire_labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fire_labelmap.txt; sourceTree = "<group>"; };
+		598B3F5E25E775AD0053782A /* ModelDataHandler2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDataHandler2.swift; sourceTree = "<group>"; };
+		598B3F6125E775CA0053782A /* fire.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.tflite; sourceTree = "<group>"; };
+		598B3F6425E776520053782A /* NMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMS.swift; sourceTree = "<group>"; };
+		598B3F6725E776C10053782A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		59F1A72D25D346A80088EA8C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		59F1A72E25D346A80088EA8C /* HudViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudViewController.swift; sourceTree = "<group>"; };
 		59F1A73625D347260088EA8C /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -98,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				59F1A73C25D3473E0088EA8C /* ModelDataHandler.swift */,
+				598B3F5E25E775AD0053782A /* ModelDataHandler2.swift */,
+				598B3F6425E776520053782A /* NMS.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -108,6 +120,7 @@
 				59F1A74025D347780088EA8C /* CVPixelBufferExtension.swift */,
 				59F1A74125D347780088EA8C /* StringExtension.swift */,
 				59F1A74225D347780088EA8C /* UIImageExtension.swift */,
+				598B3F6725E776C10053782A /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -115,10 +128,12 @@
 		59F1A74725D34B5D0088EA8C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				598B3F6125E775CA0053782A /* fire.tflite */,
 				59F1A74825D34B5D0088EA8C /* coco.tflite */,
 				59F1A74925D34B5D0088EA8C /* ducky.tflite */,
 				59F1A74A25D34B5D0088EA8C /* ducky_labelmap.txt */,
 				59F1A74B25D34B5D0088EA8C /* coco_labelmap.txt */,
+				596A3B5225E5958E00D71C82 /* fire_labelmap.txt */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -227,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				598B3F6225E775CA0053782A /* fire.tflite in Resources */,
 				9B9ACF9A2338B32E0042D1BD /* LaunchScreen.storyboard in Resources */,
 				59F1A74D25D34B5D0088EA8C /* ducky.tflite in Resources */,
 				59F1A74C25D34B5D0088EA8C /* coco.tflite in Resources */,
@@ -235,6 +251,7 @@
 				59F1A75325D34C720088EA8C /* Hud.storyboard in Resources */,
 				59F1A75625D34CA50088EA8C /* Assets.xcassets in Resources */,
 				59F1A74E25D34B5D0088EA8C /* ducky_labelmap.txt in Resources */,
+				596A3B5325E5958F00D71C82 /* fire_labelmap.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,8 +306,11 @@
 			files = (
 				9B9ACF922338B32E0042D1BD /* ViewController.swift in Sources */,
 				59F1A74325D347780088EA8C /* CVPixelBufferExtension.swift in Sources */,
+				598B3F6525E776520053782A /* NMS.swift in Sources */,
 				9B9ACF902338B32E0042D1BD /* AppDelegate.swift in Sources */,
+				598B3F5F25E775AD0053782A /* ModelDataHandler2.swift in Sources */,
 				59F1A74525D347780088EA8C /* UIImageExtension.swift in Sources */,
+				598B3F6825E776C10053782A /* UIColorExtension.swift in Sources */,
 				59F1A73925D347260088EA8C /* JoystickView.swift in Sources */,
 				59F1A73D25D3473E0088EA8C /* ModelDataHandler.swift in Sources */,
 				59F1A74425D347780088EA8C /* StringExtension.swift in Sources */,

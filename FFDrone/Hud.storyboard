@@ -12,7 +12,7 @@
         <!--Hud View Controller-->
         <scene sceneID="GfM-B4-abe">
             <objects>
-                <viewController storyboardIdentifier="HudViewController" id="brO-bU-IcO" customClass="HudViewController" customModule="HelloDrone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HudViewController" id="brO-bU-IcO" customClass="HudViewController" customModule="FFDrone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" restorationIdentifier="Hud" id="Z06-8N-NxF">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,12 +22,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4om-Lp-EgD" customClass="OverlayView" customModule="HelloDrone" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4om-Lp-EgD" customClass="OverlayView" customModule="FFDrone" customModuleProvider="target">
                                 <rect key="frame" x="30.015558403738169" y="52.000000000000114" width="602.99999999999977" height="294"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaW-bu-JX8">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaW-bu-JX8">
                                 <rect key="frame" x="309.5" y="306" width="48" height="48"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01026766514" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
@@ -50,14 +50,14 @@
                                 <rect key="frame" x="-15" y="77" width="696" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcU-Xx-X6k" userLabel="Left Joystick" customClass="JoystickView" customModule="HelloDrone" customModuleProvider="target">
+                                    <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pcU-Xx-X6k" userLabel="Left Joystick" customClass="JoystickView" customModule="FFDrone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="220"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="leftJoystickUpdate:" destination="brO-bU-IcO" eventType="valueChanged" id="XT4-yq-vov"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GzR-4f-Hky" userLabel="Right Joystick" customClass="JoystickView" customModule="HelloDrone" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GzR-4f-Hky" userLabel="Right Joystick" customClass="JoystickView" customModule="FFDrone" customModuleProvider="target">
                                         <rect key="frame" x="476" y="0.0" width="220" height="220"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>

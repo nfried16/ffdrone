@@ -29,6 +29,8 @@ class HudViewController: UIViewController {
     private let edgeOffset: CGFloat = 2.0
     private let labelOffset: CGFloat = 10.0
     
+    private var alive: Bool = true
+    
     let takeOffButtonImage = UIImage(named: "ic_flight_takeoff_48pt")
     let landButtonImage = UIImage(named: "ic_flight_land_48pt")
     let handButtonImage = UIImage(named: "ic_flight_hand_48pt")
@@ -44,11 +46,19 @@ class HudViewController: UIViewController {
         UIDevice.current.setValue(value, forKey: "orientation")
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        alive = false
+        super.viewDidDisappear(true)
+        self.removeFromParent()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /**
      View will appear. We get the drone and setup the interfaces to it. If
      the drone disconnects, we push back to the home viewcontroller.
      */
     override func viewWillAppear(_ animated: Bool) {
+        alive = true
         // get the drone
 //        if let droneUid = droneUid {
 //            drone = groundSdk.getDrone(uid: droneUid) { [unowned self] _ in
@@ -80,10 +90,6 @@ class HudViewController: UIViewController {
         return .landscapeRight
     }
     
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
     /**
      Sends us back to the home viewcontroller.
      
@@ -91,7 +97,6 @@ class HudViewController: UIViewController {
      */
     @IBAction func dismiss(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
-//        self.dismiss(animated: true, completion: nil)
     }
     
     /**
@@ -200,15 +205,25 @@ extension HudViewController {
 
     func captureImage() {
         // captures the current frame of the video feed as an image
-        let fps = 10.0
+        let fps = 1.0
         let seconds = 1.0 / fps
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            self.runInference(self.streamView.snapshot)
-            self.captureImage()
+            if self.alive {
+                self.runInference(self.streamView.snapshot)
+                self.captureImage()
+            }
+        }
+    }
+    
+    @objc func image(_ image: UIImage,
+        didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("ERROR: \(error)")
         }
     }
     
     func runInference(_ image:UIImage) {
+
         let pixelBuffer:CVPixelBuffer = image.pixelBuffer()!
         guard let inferences = self.modelDataHandler.runModel(onFrame: pixelBuffer) else {
             return
