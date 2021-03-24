@@ -9,6 +9,7 @@
 import UIKit
 import GroundSdk
 import TensorFlowLite
+import CoreLocation
 
 class HudViewController: UIViewController {
     
@@ -21,6 +22,9 @@ class HudViewController: UIViewController {
     private var drone: Drone?
     private var streamServerRef: Ref<StreamServer>?
     private var liveStreamRef: Ref<CameraLive>?
+    private var gpsRef: Ref<Gps>?
+    private var altRef: Ref<Altimeter>?
+    private var gimRef: Ref<Gimbal>?
     
     private var modelDataHandler: ModelDataHandler =
     ModelDataHandler(modelFileInfo: MobileNetSSD.modelInfo, labelsFileInfo: MobileNetSSD.labelsInfo)!
@@ -68,6 +72,7 @@ class HudViewController: UIViewController {
         
         if let drone = drone {
             initDroneRefs(drone)
+            monitorGps()
         } else {
             dismiss(self)
         }
@@ -228,11 +233,37 @@ extension HudViewController {
         guard let inferences = self.modelDataHandler.runModel(onFrame: pixelBuffer) else {
             return
         }
+        let loc: CLLocation? = gpsRef?.value?.lastKnownLocation
+        let angle: Double? = gimRef?.value?.currentAttitude[GimbalAxis.pitch]
+        let altitude: Double? = altRef?.value?.groundRelativeAltitude
+        detections.append(Detection(location: loc!))
         let width = CVPixelBufferGetWidth(pixelBuffer)
         let height = CVPixelBufferGetHeight(pixelBuffer)
         DispatchQueue.main.async {
             // Draws the bounding boxes and displays class names and confidence scores.
             self.drawDetections(onInferences: inferences, withImageSize: CGSize(width: CGFloat(width), height: CGFloat(height)))
+        }
+    }
+    
+    private func monitorGps() {
+        // Monitor the battery info instrument.
+        gpsRef = drone?.getInstrument(Instruments.gps) { gps in
+//            if let gps = gps {
+//                // Update drone battery level view.
+//                print(gps.lastKnownLocation)
+//            }
+        }
+        altRef = drone?.getInstrument(Instruments.altimeter) { altimeter in
+            if let altimeter = altimeter {
+                // Update drone battery level view.
+                print(altimeter.groundRelativeAltitude)
+            }
+        }
+        gimRef = drone?.getPeripheral(Peripherals.gimbal) { gimbal in
+//            if let gimbal = gimbal {
+//                // Update drone battery level view.
+//                print(gimbal.currentAttitude)
+//            }
         }
     }
     

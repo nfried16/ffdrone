@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		463C67577E41611E9E74D909 /* Pods_FFDrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AFBD73F76148BDB79D51BF /* Pods_FFDrone.framework */; };
 		596A3B5325E5958F00D71C82 /* fire_labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = 596A3B5225E5958E00D71C82 /* fire_labelmap.txt */; };
+		596DBF9E260AC15F00E25D25 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596DBF9D260AC15F00E25D25 /* Locations.swift */; };
 		598B3F5F25E775AD0053782A /* ModelDataHandler2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B3F5E25E775AD0053782A /* ModelDataHandler2.swift */; };
 		598B3F6225E775CA0053782A /* fire.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 598B3F6125E775CA0053782A /* fire.tflite */; };
 		598B3F6525E776520053782A /* NMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B3F6425E776520053782A /* NMS.swift */; };
@@ -38,6 +39,7 @@
 		0E769901F82BCE768F829A10 /* Pods-FFDrone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.debug.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.debug.xcconfig"; sourceTree = "<group>"; };
 		383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFDrone.release.xcconfig"; path = "Target Support Files/Pods-FFDrone/Pods-FFDrone.release.xcconfig"; sourceTree = "<group>"; };
 		596A3B5225E5958E00D71C82 /* fire_labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fire_labelmap.txt; sourceTree = "<group>"; };
+		596DBF9D260AC15F00E25D25 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		598B3F5E25E775AD0053782A /* ModelDataHandler2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDataHandler2.swift; sourceTree = "<group>"; };
 		598B3F6125E775CA0053782A /* fire.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.tflite; sourceTree = "<group>"; };
 		598B3F6425E776520053782A /* NMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMS.swift; sourceTree = "<group>"; };
@@ -83,6 +85,14 @@
 				383E25D17FD6B97518C6002E /* Pods-FFDrone.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		596DBF9C260AC15500E25D25 /* Locations */ = {
+			isa = PBXGroup;
+			children = (
+				596DBF9D260AC15F00E25D25 /* Locations.swift */,
+			);
+			path = Locations;
 			sourceTree = "<group>";
 		};
 		59F1A72B25D346A80088EA8C /* ViewControllers */ = {
@@ -167,6 +177,7 @@
 		9B9ACF8E2338B32E0042D1BD /* FFDrone */ = {
 			isa = PBXGroup;
 			children = (
+				596DBF9C260AC15500E25D25 /* Locations */,
 				59F1A72B25D346A80088EA8C /* ViewControllers */,
 				59F1A74725D34B5D0088EA8C /* Model */,
 				59F1A73F25D347780088EA8C /* Extensions */,
@@ -314,6 +325,7 @@
 				59F1A73925D347260088EA8C /* JoystickView.swift in Sources */,
 				59F1A73D25D3473E0088EA8C /* ModelDataHandler.swift in Sources */,
 				59F1A74425D347780088EA8C /* StringExtension.swift in Sources */,
+				596DBF9E260AC15F00E25D25 /* Locations.swift in Sources */,
 				59F1A73025D346A80088EA8C /* HomeViewController.swift in Sources */,
 				59F1A73125D346A80088EA8C /* HudViewController.swift in Sources */,
 				59F1A73825D347260088EA8C /* OverlayView.swift in Sources */,
