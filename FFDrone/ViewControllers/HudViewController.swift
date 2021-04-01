@@ -13,12 +13,13 @@ import CoreLocation
 
 class HudViewController: UIViewController {
     
+    private let groundSdk = GroundSdk()
+    
     @IBOutlet weak var takeoffLandButton: UIButton!
     @IBOutlet weak var streamView: StreamView!
     @IBOutlet weak var overlayView: OverlayView!
+    @IBOutlet weak var count: UILabel!
     
-    private let groundSdk = GroundSdk()
-    private var droneUid: String?
     private var drone: Drone?
     private var streamServerRef: Ref<StreamServer>?
     private var liveStreamRef: Ref<CameraLive>?
@@ -35,8 +36,6 @@ class HudViewController: UIViewController {
     
     private var alive: Bool = true
     
-    let takeOffButtonImage = UIImage(named: "ic_flight_takeoff_48pt")
-    let landButtonImage = UIImage(named: "ic_flight_land_48pt")
     let handButtonImage = UIImage(named: "ic_flight_hand_48pt")
     
     private var pilotingItf: Ref<ManualCopterPilotingItf>?
@@ -48,13 +47,14 @@ class HudViewController: UIViewController {
         super.viewDidLoad()
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        takeoffLandButton.isHidden = false
+        takeoffLandButton.setImage(handButtonImage, for: .normal)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         alive = false
         super.viewDidDisappear(true)
-        self.removeFromParent()
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     /**
@@ -62,14 +62,9 @@ class HudViewController: UIViewController {
      the drone disconnects, we push back to the home viewcontroller.
      */
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         alive = true
-        // get the drone
-//        if let droneUid = droneUid {
-//            drone = groundSdk.getDrone(uid: droneUid) { [unowned self] _ in
-//                self.dismiss(self)
-//            }
-//        }
-        
         if let drone = drone {
             initDroneRefs(drone)
             monitorGps()
@@ -78,21 +73,16 @@ class HudViewController: UIViewController {
         }
     }
     
-    /**
-     Sets the deviceUid to the current connected drones identifier.
-     
-     - Parameter uid:   The uid of the drone
-     */
-    func setDeviceUid(_ uid: String) {
-        droneUid = uid
-    }
-    
     func setDrone(_ drone: Drone) {
         self.drone = drone
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeRight
+        return [.landscapeRight, .landscapeRight]
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
     
     /**
@@ -101,6 +91,7 @@ class HudViewController: UIViewController {
      - Parameter sender: the caller fo this function.
      */
     @IBAction func dismiss(_ sender: Any) {
+        alive = false
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -113,19 +104,18 @@ class HudViewController: UIViewController {
      */
     private func initDroneRefs(_ drone: Drone) {
         pilotingItf = drone.getPilotingItf(PilotingItfs.manualCopter) { [unowned self] pilotingItf in
-            self.updateTakeoffLandButton(pilotingItf)
+            takeoffLandButton.isHidden = false
+            takeoffLandButton.setImage(handButtonImage, for: .normal)
         }
         
         // Monitor the stream server.
         streamServerRef = drone.getPeripheral(Peripherals.streamServer) { [weak self] streamServer in
             // Called when the stream server is available and when it changes.
-
             if let self = self, let streamServer = streamServer {
                 // Enable Streaming
                 streamServer.enabled = true
                 self.liveStreamRef = streamServer.live { liveStream in
                     // Called when the live stream is available and when it changes.
-
                     if let liveStream = liveStream {
                         // Set the live stream as the stream to be render by the stream view.
                         self.streamView.setStream(stream: liveStream)
@@ -136,72 +126,6 @@ class HudViewController: UIViewController {
                 }
             }
         }
-        
-        
-    }
-    
-    /**
-     Responds to the takeoffLand button click action. The drone will automatically takeoff
-     if grounded or land if in flight.
-     
-     - Parameter sender: The takeoffLand button on the Hud viewcontroller.
-     */
-    @IBAction func takeOffLand(_ sender: Any) {
-        if let pilotingItf = pilotingItf?.value {
-            pilotingItf.smartTakeOffLand()
-        }
-    }
-    
-    /**
-     This function is called by the piloting interface on the event of a new
-     smartTakeOffLand action being performed on the drone. This updates the image
-     of the takeoffLand button dynamically to represent the action being performed.
-     
-     - Parameter pilotingItf: The piloting interface used for manual flight.
-     */
-    private func updateTakeoffLandButton(_ pilotingItf: ManualCopterPilotingItf?) {
-        if let pilotingItf = pilotingItf, pilotingItf.state == .active {
-            takeoffLandButton.isHidden = false
-            let smartAction = pilotingItf.smartTakeOffLandAction
-            switch smartAction {
-            case .land:
-                takeoffLandButton.setImage(landButtonImage, for: .normal)
-            case .takeOff:
-                takeoffLandButton.setImage(takeOffButtonImage, for: .normal)
-            case .thrownTakeOff:
-                takeoffLandButton.setImage(handButtonImage, for: .normal)
-            case .none:
-                ()
-            }
-            takeoffLandButton.isEnabled = smartAction != .none
-        } else {
-            takeoffLandButton.isEnabled = false
-            takeoffLandButton.isHidden = true
-        }
-    }
-    
-    /**
-     Responds to the Left Joystick. Updates the pitch and roll of the drone in real time.
-     
-     - Parameter sender: The left joystick on the Hud viewcontroller.
-     */
-    @IBAction func leftJoystickUpdate(_ sender: JoystickView) {
-        if let pilotingItf = pilotingItf?.value, pilotingItf.state == .active {
-            pilotingItf.set(pitch: -sender.value.y)
-            pilotingItf.set(roll: sender.value.x)
-        }
-    }
-    
-    /**
-     Responds to the Right Joystick. Updates the vertical speed and yaw rotation in real time.
-     
-     - Parameter sender: The right joystick on the Hud viewcontroller.
-     */
-    @IBAction func rightJoystickUpdate(_ sender: JoystickView) {
-        if let pilotingItf = pilotingItf?.value, pilotingItf.state == .active {
-            pilotingItf.set(verticalSpeed: sender.value.y)
-            pilotingItf.set(yawRotationSpeed: sender.value.x)
-        } 
     }
 }
 
@@ -220,23 +144,27 @@ extension HudViewController {
         }
     }
     
-    @objc func image(_ image: UIImage,
-        didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            print("ERROR: \(error)")
-        }
-    }
-    
     func runInference(_ image:UIImage) {
-
         let pixelBuffer:CVPixelBuffer = image.pixelBuffer()!
-        guard let inferences = self.modelDataHandler.runModel(onFrame: pixelBuffer) else {
+        
+        // Get time
+        let curr = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        let currTime: String = formatter.string(from: curr) // 10:48:53 PM
+        
+        guard let inferences = self.modelDataHandler.runModel(onFrame: pixelBuffer)?.inferences else {
             return
         }
-        let loc: CLLocation? = gpsRef?.value?.lastKnownLocation
-        let angle: Double? = gimRef?.value?.currentAttitude[GimbalAxis.pitch]
-        let altitude: Double? = altRef?.value?.groundRelativeAltitude
-        detections.append(Detection(location: loc!))
+        if(inferences.count > 0) {
+            var nc: Int = Int(count.text ?? "0") ?? 0
+            nc+=1
+            count.text = String(nc)
+            let loc: CLLocation? = gpsRef?.value?.lastKnownLocation
+//            let angle: Double? = gimRef?.value?.currentAttitude[GimbalAxis.pitch]
+//            let altitude: Double? = altRef?.value?.groundRelativeAltitude
+            detections.append(Detection(location: loc!, img: image, time: currTime, maxConf: 0))
+        }
         let width = CVPixelBufferGetWidth(pixelBuffer)
         let height = CVPixelBufferGetHeight(pixelBuffer)
         DispatchQueue.main.async {
@@ -254,10 +182,10 @@ extension HudViewController {
 //            }
         }
         altRef = drone?.getInstrument(Instruments.altimeter) { altimeter in
-            if let altimeter = altimeter {
-                // Update drone battery level view.
-                print(altimeter.groundRelativeAltitude)
-            }
+//            if let altimeter = altimeter {
+//                // Update drone battery level view.
+//                print(altimeter.groundRelativeAltitude)
+//            }
         }
         gimRef = drone?.getPeripheral(Peripherals.gimbal) { gimbal in
 //            if let gimbal = gimbal {

@@ -1,202 +1,265 @@
+// Copyright (C) 2019 Parrot Drones SAS
 //
-//  ViewController.swift
-//  ParrotDemo
+//    Redistribution and use in source and binary forms, with or without
+//    modification, are permitted provided that the following conditions
+//    are met:
+//    * Redistributions of source code must retain the above copyright
+//      notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above copyright
+//      notice, this list of conditions and the following disclaimer in
+//      the documentation and/or other materials provided with the
+//      distribution.
+//    * Neither the name of the Parrot Company nor the names
+//      of its contributors may be used to endorse or promote products
+//      derived from this software without specific prior written
+//      permission.
 //
-//  Created by ian timmis on 7/16/19.
-//  Copyright © 2019 RIIS. All rights reserved.
-//
+//    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+//    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+//    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+//    FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+//    PARROT COMPANY BE LIABLE FOR ANY DIRECT, INDIRECT,
+//    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+//    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+//    OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+//    AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+//    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+//    OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+//    SUCH DAMAGE.
 
 import UIKit
+// import GroundSdk library.
 import GroundSdk
 
-class HomeViewController: UITableViewController {
-    
+/// GroundSdk Hello Drone Sample
+///
+/// This activity allows the application to connect to a drone and/or a remote control.
+/// It displays the connection state, battery level and video stream.
+/// It allows to take off and land by button click.
+class HomeViewController: UIViewController {
+
+    /// Ground SDk instance.
     private let groundSdk = GroundSdk()
-    private var droneListRef: Ref<[DroneListEntry]>!
-    private var remoteListRef: Ref<[RemoteControlListEntry]>!
-    private var droneList: [DroneListEntry]?
-    private var remoteList: [RemoteControlListEntry]?
+    /// Reference to auto connection.
+    private var autoConnectionRef: Ref<AutoConnection>?
+
+    // Drone:
+    /// Current drone instance.
+    private var drone: Drone?
+    /// Reference to the current drone state.
+    private var droneStateRef: Ref<DeviceState>?
+    /// Reference to the current drone battery info instrument.
+    private var droneBatteryInfoRef: Ref<BatteryInfo>?
+    /// Reference to a current drone piloting interface.
+    private var pilotingItfRef: Ref<ManualCopterPilotingItf>?
     
-    private var drone: Drone? = nil
-    private var remote: RemoteControl? = nil
-    private var stateRef: Ref<DeviceState>?
-    
-    private var selectedUid: String?
-    private var droneState: Int?
-    
-    /**
-     Responds to the view loading. Gets the list of drones and saves a reference to them.
-     This sets up the closure allowing the table to update in real time to updates in
-     the set of observable drones.
-     */
+    // Remote control:
+    /// Current remote control instance.
+    private var remote: RemoteControl?
+    /// Reference to the current remote control state.
+    private var remoteStateRef: Ref<DeviceState>?
+    /// Reference to the current remote control battery info instrument.
+    private var remoteBatteryInfoRef: Ref<BatteryInfo>?
+
+    // User Interface:
+    /// Video stream view.
+    @IBOutlet weak var streamView: StreamView!
+    /// Drone state text view.
+    @IBOutlet weak var droneStateTxt: UILabel!
+    /// Drone battery level text view.
+    @IBOutlet weak var droneBatteryTxt: UILabel!
+    /// Remote state level text view.
+    @IBOutlet weak var remoteStateTxt: UILabel!
+    /// Remote battery level text view.
+    @IBOutlet weak var remoteBatteryTxt: UILabel!
+    /// Takeoff / land button.
+    @IBOutlet weak var takeOffLandBt: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.rowHeight = 80
-        
-        // This keeps our drone lists up to date in real time
-        droneListRef = groundSdk.getDroneList(
-            observer: { [unowned self] entryList in
-                self.droneList = entryList
-                self.tableView.reloadData()
-        })
-        remoteListRef = groundSdk.getRemoteControlList(
-            observer: { [unowned self] entryList in
-                self.remoteList = entryList
-                self.tableView.reloadData()
-        })
+
+        // Reset user interface
+        resetDroneUi()
+        resetRemoteUi()
+
+        // Monitor the auto connection facility.
+        // Keep the reference to be notified on update.
+        autoConnectionRef = groundSdk.getFacility(Facilities.autoConnection) { [weak self] autoConnection in
+            // Called when the auto connection facility is available and when it changes.
+
+            if let self = self, let autoConnection = autoConnection {
+                // Start auto connection.
+                if (autoConnection.state != AutoConnectionState.started) {
+                    autoConnection.start()
+                }
+
+                // If the drone has changed.
+                if (self.drone?.uid != autoConnection.drone?.uid) {
+                    if (self.drone != nil) {
+                        // Stop to monitor the old drone.
+                        self.stopDroneMonitors()
+
+                        // Reset user interface drone part.
+                        self.resetDroneUi()
+                    }
+
+                    // Monitor the new drone.
+                    self.drone = autoConnection.drone
+                    if (self.drone != nil) {
+                        self.startDroneMonitors()
+                    }
+                }
+
+                // If the remote control has changed.
+                if (self.remote?.uid != autoConnection.remoteControl?.uid) {
+                    if (self.remote != nil) {
+                        // Reset user interface Remote part.
+                        self.resetRemoteUi()
+
+                        // Stop to monitor the old remote.
+                        self.stopRemoteMonitors()
+                    }
+
+                    // Monitor the new remote.
+                    self.remote = autoConnection.remoteControl
+                    if (self.remote != nil) {
+                        self.startRemoteMonitors()
+                    }
+                }
+            }
+        }
     }
 
-    /**
-     Loads the rows of our tableview. Sets up a cell for each drone in our list. The text
-     in each cell is set up to update in real time to updates of our drones.
-     (such as connection state, etc.)
-     
-     - Parameter tableView: Reference to the tableView
-     - Parameter indexPath: The index to current cell being populated
-     
-     - Returns: The new table cell we have created
-     */
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // This function loads the table cells
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DroneCell", for: indexPath)
-        if let cell = cell as? DeviceCell {
-            if let droneEntry =  self.remoteList?[indexPath.row] {
-                cell.name.text = droneEntry.name
-                cell.uid.text = droneEntry.uid
-                cell.model.text = droneEntry.model.description
-                let state = droneEntry.state
-                cell.connectionState.text =
-                "\(state.connectionState.description)-\(state.connectionStateCause.description)"
-            }
-        }
-        
-        return cell
+    /// Resets drone user interface part.
+    private func resetDroneUi() {
+        // Reset drone user interface views.
+        droneStateTxt.text = DeviceState.ConnectionState.disconnected.description
+        droneBatteryTxt.text = ""
+        takeOffLandBt.isEnabled = false
     }
-    
-    /**
-     Responds to table cells being clicked. If the drone we have selected is not connected
-     to our phone, connect to it. If the drone is connected, then disconnect. If we attempt
-     to connect and cannot, we display a message to the user that they need to be connected to
-     the drone's WiFi before connecting to the drone.
-     
-     Upon successful connection, we navigate automatically to the Hud viewcontroller.
-     
-     - Parameter tableView: Reference to the tableView
-     - Parameter indexPath: The index to selected cell
-     */
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let droneEntry = self.droneList?[indexPath.row] {
-            drone = groundSdk.getDrone(uid: droneEntry.uid)
-            self.selectedUid = droneEntry.uid
-            if let drone = drone {
-                self.stateRef = drone.getState { [weak self] state in
-                    (self?.tableView.cellForRow(at: indexPath) as! DeviceCell).connectionState.text = state!.description
-                    
-                    // When disconnecting the drone, this code will get called twice, first saying "connected" second saying "disconnected".
-                    // We keep track of previous drone state to ensure disconnection does not push to Hud screen
-                    if (state?.connectionState.rawValue)! == 2 && self?.droneState != 2{
-                            self?.navigateToHud()
-                    }
-                    self?.droneState = state?.connectionState.rawValue
-                }
-            }
 
-            if let connectionState = stateRef?.value?.connectionState {
-                if connectionState == DeviceState.ConnectionState.disconnected {
-                    if let drone = drone {
-                        if drone.state.connectors.count > 0 {
-                            connect(drone: drone, connector: drone.state.connectors[0])
-                        } else {
-                            // No way of connecting to drone
-                            let alert = UIAlertController(title: "No means of connection", message: "To connect to your drone, remember to connect to the Anafi WiFi signal first.", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                            self.present(alert, animated: true)
-                        }
-                    }
-                } else {
-                    _ = drone?.disconnect()
-                }
+    /// Starts drone monitors.
+    private func startDroneMonitors() {
+        // Monitor drone state.
+        monitorDroneState()
+
+        // Monitor drone battery level.
+        monitorDroneBatteryLevel()
+        
+        // Monitor piloting interface.
+        monitorPilotingInterface()
+    }
+
+    /// Stops drone monitors.
+    private func stopDroneMonitors() {
+        // Forget references linked to the current drone to stop their monitoring.
+
+        droneStateRef = nil
+        droneBatteryInfoRef = nil
+    }
+
+    /// Monitor current drone state.
+    private func monitorDroneState() {
+        // Monitor current drone state.
+        droneStateRef = drone?.getState { [weak self] state in
+            // Called at each drone state update.
+            if let self = self, let state = state {
+                // Update drone state view.
+                self.droneStateTxt.text = state.connectionState.description
+            }
+        }
+    }
+
+    /// Monitors current drone battery level.
+    private func monitorDroneBatteryLevel() {
+        // Monitor the battery info instrument.
+        droneBatteryInfoRef = drone?.getInstrument(Instruments.batteryInfo) { [weak self] batteryInfo in
+            // Called when the battery info instrument is available and when it changes.
+            if let self = self, let batteryInfo = batteryInfo {
+                // Update drone battery level view.
+                self.droneBatteryTxt.text = "\(batteryInfo.batteryLevel)%"
+            }
+        }
+    }
+
+    /// Called on takeOff/land button click.
+    @IBAction func takeOffLandBtAction(_ sender: Any) {
+        navigateToHud();
+    }
+
+    /// Resets remote user interface part.
+    private func resetRemoteUi() {
+        // Reset remote control user interface views.
+        remoteStateTxt.text = DeviceState.ConnectionState.disconnected.description
+        remoteBatteryTxt.text = ""
+    }
+
+    /// Starts remote control monitors.
+    private func startRemoteMonitors() {
+        // Monitor remote state
+        monitorRemoteState()
+
+        // Monitor remote battery level
+        monitorRemoteBatteryLevel()
+    }
+
+    /// Stops remote control monitors.
+    private func stopRemoteMonitors() {
+        // Forget all references linked to the current remote to stop their monitoring.
+        remoteStateRef = nil
+        remoteBatteryInfoRef = nil
+    }
+
+    /// Monitor current remote control state.
+    private func monitorRemoteState() {
+        // Monitor current drone state.
+        remoteStateRef = remote?.getState { [weak self] state in
+            // Called at each remote state update.
+            if let self = self, let state = state {
+                // Update remote state view.
+                self.remoteStateTxt.text = state.connectionState.description
+            }
+        }
+    }
+
+    /// Monitors current remote control battery level.
+    private func monitorRemoteBatteryLevel() {
+        // Monitor the battery info instrument.
+        remoteBatteryInfoRef = remote?.getInstrument(Instruments.batteryInfo) { [weak self] batteryInfo in
+            // Called when the battery info instrument is available and when it changes.
+            if let self = self, let batteryInfo = batteryInfo {
+                // Update drone battery level view.
+                self.remoteBatteryTxt.text = "\(batteryInfo.batteryLevel)%"
             }
         }
     }
     
-    /**
-     Performs the process of connecting to the drone via the specified device connector.
-     In this app, we only connect to the drone using nothing but our cell phone. Other
-     connectors could allow phone plugged into the drone controller etc. If the drone
-     requires a password, we ask for it. Otherwise, simply connect.
-     
-     - Parameter drone: The drone we want to connect to
-     - Parameter connector: The way we would like to connect to drone.
-     */
-    private func connect(drone: Drone, connector: DeviceConnector) {
-        if drone.state.connectionStateCause == .badPassword {
-            // ask for password
-            let alert = UIAlertController(title: "Password", message: "", preferredStyle: .alert)
-            alert.addTextField(configurationHandler: nil)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                if let password = alert.textFields?[0].text {
-                    _ = drone.connect(connector: connector, password: password)
+    /// Monitors current drone piloting interface.
+    private func monitorPilotingInterface() {
+        // Monitor a piloting interface.
+        pilotingItfRef = drone?.getPilotingItf(PilotingItfs.manualCopter) { [weak self] itf in
+            // Called when the manual copter piloting Interface is available and when it changes.
+            if let itf = itf {
+                if(itf.state == ActivablePilotingItfState.active) {
+                    self?.takeOffLandBt.isEnabled = true
                 }
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
-        } else {
-            _ = drone.connect(connector: connector)
+                else {
+                    self?.takeOffLandBt.isEnabled = false;
+                }
+            } else {
+                // Disable the button if the piloting interface is not available.
+                self?.takeOffLandBt.isEnabled = false
+            }
         }
     }
     
-    /**
-     Segues to the Hud viewController. This is conditioned on the drone
-     being connected.
-     */
     private func navigateToHud() {
-        if let drone = drone {
-            if drone.getPilotingItf(PilotingItfs.manualCopter) != nil {
-                performSegue(withIdentifier: "gotoHud", sender: self)
-            }
+        let sampleStoryBoard : UIStoryboard = UIStoryboard(name: "Hud", bundle:nil)
+        let hud  = sampleStoryBoard.instantiateViewController(withIdentifier: "HudViewController") as! HudViewController
+        if let drone = self.drone {
+            hud.setDrone(drone)
         }
+        self.navigationController?.pushViewController(hud, animated: true)
     }
-    
-    /**
-     Returns the number of rows in the tableview, the count is equal to the amount of
-     drones we have in our list.
-     
-     - Parameter tableView: The table in our viewcontroller
-     - Parameter section: the section we are populating (in our case, we only have one)
-     
-     - Returns: Num of rows in tableview
-     */
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return droneList?.count ?? 0
-    }
-    
-    /**
-     Responds to the segue to another ViewController. We pass the drone
-     Uid to the Hud here.
-     
-     - Parameter segue: The segue in progress.
-     - Parameter sender: The caller of this function.
-     */
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? HudViewController,
-            let selectedUid = selectedUid {
-            viewController.setDeviceUid(selectedUid)
-        }
-        
-    }
-}
-
-/**
- This is the class representing the table cells in our drone list
- */
-@objc(DeviceCell)
-private class DeviceCell: UITableViewCell {
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var model: UILabel!
-    @IBOutlet weak var uid: UILabel!
-    @IBOutlet weak var connectionState: UILabel!
-    @IBOutlet weak var connectors: UILabel!
 }
 

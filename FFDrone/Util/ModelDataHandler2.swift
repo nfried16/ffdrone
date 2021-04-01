@@ -48,7 +48,7 @@ class ModelDataHandler: NSObject {
   let threadCount: Int
   let threadCountLimit = 10
 
-  let threshold: Float = 0.2
+  let threshold: Float = 0.5
 
   // MARK: Model parameters
   let batchSize = 1
@@ -124,7 +124,9 @@ class ModelDataHandler: NSObject {
   /// This class handles all data preprocessing and makes calls to run inference on a given frame
   /// through the `Interpreter`. It then formats the inferences obtained and returns the top N
   /// results for a successful inference.
-  func runModel(onFrame pixelBuffer: CVPixelBuffer) -> [Inference]? {
+  func runModel(onFrame pixelBuffer: CVPixelBuffer) -> Result? {
+    let interval: TimeInterval
+    let startDate = Date()
 //    let pixelBuffer:CVPixelBuffer = (UIImage(named: "f2")?.pixelBuffer()!)!
     let imageWidth = CVPixelBufferGetWidth(pixelBuffer)
     let imageHeight = CVPixelBufferGetHeight(pixelBuffer)
@@ -202,9 +204,10 @@ class ModelDataHandler: NSObject {
       height: CGFloat(imageHeight)
     )
 
+    interval = Date().timeIntervalSince(startDate) * 1000
     // Returns the inference time and inferences
-//    let result = Result(inferenceTime: interval, inferences: resultArray)
-    return resultArray
+    let result = Result(inferenceTime: interval, inferences: resultArray)
+    return result
   }
 
     func formatTest(boundingBox: [Float], outputClasses: [Float], outputScores: [Float], outputCount: Int, width: CGFloat, height: CGFloat) -> [Inference]{
@@ -215,7 +218,6 @@ class ModelDataHandler: NSObject {
         let ind: [Bool] = outputScores.map {$0 > threshold}
         var outSc: [Float] = outputScores.filter {$0 > threshold}
         var outBou: [Float] = boundingBox.enumerated().filter {ind[$0.offset/4]}.map {$0.element}
-        print(outSc.count)
         var outCls: [Float] = outputClasses.enumerated().filter {ind[$0.offset]}.map {$0.element}
         let r: Float = min(Float(inputWidth)/Float(width), Float(inputHeight)/Float(height))
         (outBou, outCls, outSc) = nms(boundingBox: outBou, outputClasses: outCls, outputScores: outSc, outputCount: outCls.count)
@@ -345,17 +347,6 @@ class ModelDataHandler: NSObject {
         botpad += [Float](repeating: 114.0/255.0, count: width*3)
     }
     floats = toppad + floats + botpad
-//    func getRGB(x: Int, y: Int) {
-//        print("R: \(floats[y*width*3+x*3])")
-//        print("G: \(floats[y*width*3+x*3+1])")
-//        print("B: \(floats[y*width*3+x*3+2])")
-//    }
-//    print("1111111111")
-//    getRGB(x: 0, y: 100)
-//    print("1111111111")
-//    print("2222222222")
-//    getRGB(x: 0, y: 110)
-//    print("2222222222")
     return Data(copyingBufferOf: floats)
   }
 

@@ -88,7 +88,4 @@ class OverlayView: UIView {
     let attributedString = NSAttributedString(string: objectOverlay.name, attributes: [NSAttributedString.Key.foregroundColor : stringFontColor, NSAttributedString.Key.font : objectOverlay.font])
     attributedString.draw(in: stringRect)
   }
-    
-  
-
 }
