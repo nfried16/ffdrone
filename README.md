@@ -1,4 +1,6 @@
 # FFDrone Sample
+iOS app to control Parrot Anafi Drone and run custom yolov5 fire detection model
+Demo Video [here](https://youtu.be/wzRek5qjiho)
 
 ## Install cocoapods
 
@@ -10,7 +12,7 @@ To install cocoapods run in a terminal :
 $ sudo gem install cocoapods
 ```
 
-## Pos Install
+## Pods Install
 
 To install groundSdk Pods, in this folder run in a terminal :
 
