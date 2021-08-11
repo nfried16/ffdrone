@@ -1,5 +1,5 @@
 # FFDrone Sample
-iOS app to control Parrot Anafi Drone and run custom yolov5 fire detection model
+iOS app to control Parrot Anafi Drone and run custom yolov5 fire detection model  
 Demo Video [here](https://youtu.be/wzRek5qjiho)
 
 ## Install cocoapods
